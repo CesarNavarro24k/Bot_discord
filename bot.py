@@ -2,7 +2,9 @@ import discord
 from discord.ext import commands
 import requests
 import Settings
-
+import numpy as np
+from qutip import *
+import time
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -50,38 +52,48 @@ async def on_ready():
 async def limpiar(ctx):
     await ctx.channel.purge()
     await ctx.send("Mensajes eliminados", delete_after = 3)
-###################
-"""
-hjhjkjkjkkjk
-kjkjkjkjkjk
-kjkjkjkjkjk
-"""
+################################################################################################
 @bot.command()
-async def contaminacion(ctx):
-    await ctx.send(f"""Hola, soy un bot {bot.user}!""")# esta linea saluda
-    await ctx.send(f'Te voy hablar un poco sobre la contaminacion')
-    await ctx.send(f'La contaminación es un gran problema a nivel mundial, muchos paises sufren a diario')
-    # Enviar una pregunta al usuario
-    await ctx.send("Quieres consejos sobre cómo combatir la contaminación? Responde con 'sí' o 'no'.")
-# Esperar la respuesta del usuario
-    def check(message):
-        return message.author == ctx.author and message.channel == ctx.channel and message.content in ['sí', 'si', 'no']
-    response = await bot.wait_for('message', check=check)
-    if response:
-        if response.content in ['sí', 'si']:
-            await ctx.send("1. No arrojar basura en los rios")
-            await ctx.send("2. Dejar de quemar basuras")   
-        else:
-            await ctx.send("Está bien, si alguna vez necesitas consejos, no dudes en preguntar.")
-    else:
-        await ctx.send("Lo siento, no pude entender tu respuesta. Inténtalo de nuevo.")
-    await ctx.send("Quieres saber la definicion de contaminacion, responde si o no")
-    response1 = await bot.wait_for('message', check=check)
-    if response1:
-        if response1.content in ['sí', 'si']:
-            await ctx.send("Arrojar basura") 
-        else:
-            await ctx.send("Está bien, si alguna vez necesitas consejos, no dudes en preguntar.")
-    else:
-        await ctx.send("Lo siento, no pude entender tu respuesta. Inténtalo de nuevo.")
+async def suma(ctx,n1:int,n2:int):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    resultado = n1 + n2
+    await ctx.send(f"La suma de {n1} y {n2} es {resultado}")
+@bot.command()
+async def resta(ctx,n1:int,n2:int):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    resultado1 = n1 - n2
+    await ctx.send(f"La resta de {n1} y {n2} es {resultado1}")
+@bot.command()
+async def raiz(ctx,n1:int):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    resultado2 = np.sqrt(n1)
+    await ctx.send(f"La raiz cuadrada de {n1} {resultado2}")
+@bot.command()
+async def ket0(ctx):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    ket0 = basis(2,0)
+    await ctx.send(f"El ket0 es {ket0}")
+@bot.command()
+async def ket1(ctx):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    ket1 = basis(2,1)
+    await ctx.send(f"El ket1 es {ket1}")
+@bot.command()
+async def funciones(ctx):
+    """Esta función suma dos números enteros y devuelve el resultado."""
+    await ctx.send(f"Tengo varias funciones, aqí te voy a comentar algunas de ellas")
+    time.sleep(1)
+    await ctx.send(f"1.Tengo una funcion que envia pokemones, para utilizarla debes llamarla !poke pikachu(es un ejemplo)")
+    time.sleep(1)
+    await ctx.send(f"2.Tengo unas funciones que envian imagenes de perros y de patos")
+    time.sleep(1)
+    await ctx.send(f"3.Tengo una función que realiza sumas, la llamas !suma 2 3(te da el resultado)")
+    time.sleep(1)
+    await ctx.send(f"4.Tengo una función que realiza restas, la llamas !resta 2 3(te da el resultado)")
+    time.sleep(1)
+    await ctx.send(f"5.Tengo una función que realiza raices cuadradas, la llamas !raiz 2 (te da el resultado)")
+    time.sleep(1)
+    await ctx.send(f"6.Tengo una función que te muestra el ket0, la llama !ket0")
+    time.sleep(1)
+    await ctx.send(f"7.Tengo una función que te muestra el ket1, la llama !ket1")
 bot.run(Settings.TOKEN )
